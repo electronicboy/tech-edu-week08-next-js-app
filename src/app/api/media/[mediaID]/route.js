@@ -34,7 +34,7 @@ export async function DELETE(request, {params}) {
 
     } catch (e) {
         console.log(e)
-        //await client.query("ABORT TRANSACTION")
+        await client.query("ABORT TRANSACTION")
     } finally {
         console.log("a")
         client.release()

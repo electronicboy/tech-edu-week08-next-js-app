@@ -75,3 +75,19 @@ export default async function MediaPage({params}) {
         </>
     )
 }
+
+export async function generateMetadata({params}) {
+    const {mediaID} = params
+    const mediaFetch = (await db().query("SELECT * FROM moviereview_media WHERE id = $1", [Number(mediaID)])).rows[0];
+
+return {
+    title: mediaFetch.title,
+    description: mediaFetch.description.slice(0,100),
+    openGraph: {
+        title: mediaFetch.title,
+        description: mediaFetch.description.slice(0,100),
+    }
+}
+
+
+}
