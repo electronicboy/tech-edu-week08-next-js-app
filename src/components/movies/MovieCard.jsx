@@ -2,7 +2,7 @@
 import {motion} from "framer-motion";
 import {useRouter} from "next/navigation"
 
-export default function MovieCard({id, name, type, img}) {
+export default function MovieCard({id, title, type, img}) {
     const router = useRouter()
     // https://stackoverflow.com/questions/57125263/animate-children-when-hover-at-parent-with-framer-motion
     const card = {
@@ -29,10 +29,10 @@ export default function MovieCard({id, name, type, img}) {
     }
 
     return (
-        <motion.div onClick={doNavigate} whileHover={"hover"} animate={"normal"} className={"w-[200px] h-[300px] overflow-hidden relative rounded-2xl bg-contain shadow shadow-slate-800"} style={{backgroundImage: `url(${img})`}}>
+        <motion.div onClick={doNavigate} whileHover={"hover"} animate={"normal"} className={"w-[200px] h-[300px] overflow-hidden relative rounded-2xl bg-contain bg-no-repeat shadow shadow-slate-800"} style={{backgroundImage: `url(${img})`}}>
             {/*<Image src={img} alt={name} width={200} height={600}/>*/}
             <motion.div variants={card} className={"absolute bottom-0 bg-slate-600 bg-opacity-60 w-full text-center backdrop-blur-sm"}>
-                <span>{name}</span>
+                <span>{title}</span>
             </motion.div>
         </motion.div>
     )
