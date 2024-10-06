@@ -12,6 +12,9 @@ module.exports = {
         foreground: "var(--foreground)",
       },
     },
+    fontFamily: {
+      "ubuntu": "var(--ubuntu-font)",
+    }
   },
   plugins: [],
 };
