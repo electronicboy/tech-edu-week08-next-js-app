@@ -8,6 +8,7 @@ import Link from "next/link";
 import Comments from "@/components/Comments";
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
+import DeletePostButton from "@/components/DeletePostButton";
 
 export default async function MediaPage({params}) {
     const {mediaID} = params
@@ -39,9 +40,12 @@ export default async function MediaPage({params}) {
 
         return (
             <div>
-                <div className={"w-full text-center pt-4 pb-4"}>
+                <div className={"w-full text-center pt-4 pb-4 flex justify-center"}>
                     <h2 className={"text-center text-4xl  inline"}>{media.title}</h2>
-                    <Link href={`/media/${mediaID}/edit`}><FaEdit className={"inline"}/></Link>
+                    <div className={"inline"}>
+                        <DeletePostButton mediaID={mediaID} />
+                        <Link href={`/media/${mediaID}/edit`}><FaEdit className={"inline"}/></Link>
+                    </div>
                 </div>
                 <div>
                     <div>
