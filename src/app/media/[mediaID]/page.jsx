@@ -23,7 +23,7 @@ export default async function MediaPage({params}) {
                         <Image width={200} height={200} src={media ? media.img : ""} alt={media.title}/>
                     </div>
                     <div>
-                        <div>
+                        <div className={"whitespace-pre-wrap"}>
                         {media.description}
                         </div>
                         <div>
