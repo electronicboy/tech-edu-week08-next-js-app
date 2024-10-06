@@ -5,9 +5,34 @@ import Image from "next/image";
 import {formatDate} from "@/utils/timeutils";
 import {FaEdit} from "react-icons/fa";
 import Link from "next/link";
+import Comments from "@/components/Comments";
+import {revalidatePath} from "next/cache";
+import {redirect} from "next/navigation";
 
 export default async function MediaPage({params}) {
     const {mediaID} = params
+
+    /**
+     *
+     * @param data {FormData}
+     * @returns {Promise<void>}
+     */
+    async function submitComment(data) {
+        "use server"
+        const {name, comment, rating} = Object.fromEntries(data)
+
+        const parsedRating = Number(rating)
+
+        try {
+            await db().query("INSERT INTO moviereview_reviews (movie, name, comment, rating) VALUES ($1, $2, $3, $4)",
+                [mediaID, name, comment, parsedRating])
+        }
+        catch (error) {
+            console.error(error)
+        }
+        revalidatePath(`/media/${mediaID}`)
+        redirect(`/media/${mediaID}`);
+    }
 
     try {
         const media = (await db().query("SELECT * FROM moviereview_media WHERE id = $1", [Number(mediaID)])).rows[0];
@@ -32,6 +57,7 @@ export default async function MediaPage({params}) {
                         </div>
                     </div>
                 </div>
+                <Comments mediaID={mediaID} submitComment={submitComment}/>
             </div>
         )
 

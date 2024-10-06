@@ -1,7 +1,7 @@
 "use client"
 
 import {useEffect, useState} from "react";
-import FormElement from "@/components/forms/makeup/FormElement";
+import ClientFormElement from "@/components/forms/makeup/ClientFormElement";
 import FormInput from "@/components/forms/makeup/FormInput";
 import FormTextArea from "@/components/forms/makeup/FormTextArea";
 import FormButton from "@/components/forms/makeup/FormButton";
@@ -93,7 +93,7 @@ export default function MediaEditorForm({title, media, submit, genres}) {
 
     return (<>
         {title && <div className={"text-center text-white text-3xl pt-3"}>{title}</div>}
-        <FormElement submitAction={handleSubmit}>
+        <ClientFormElement submitAction={handleSubmit}>
             <FormInput name="title" required={true} value={formData.title} onChange={onChange}/>
             <FormSelect name="type" value={formData.type} onChange={onChange}>
                 {
@@ -110,7 +110,7 @@ export default function MediaEditorForm({title, media, submit, genres}) {
             <FormInput name={"img"} value={formData.img} onChange={onChange} required={true}/>
             {error && <FormText error={error}/>}
             <FormButton text={"Submit"}>Submit</FormButton>
-        </FormElement>
+        </ClientFormElement>
     </>)
 
 

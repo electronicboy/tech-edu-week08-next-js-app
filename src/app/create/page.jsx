@@ -1,6 +1,7 @@
 import MediaEditorForm from "@/components/forms/MediaEditorForm";
 import {db} from "@/utils/db";
 import {revalidatePath} from "next/cache";
+import sanitizeHtml from 'sanitize-html';
 
 
 export default async function CreatePage() {
@@ -16,9 +17,11 @@ export default async function CreatePage() {
 
     async function handleSubmission(data) {
         "use server"
-        const {title, type, img, description, genres} = data; // simple
+        let {title, type, img, description, genres} = data; // simple
         const released = data.released && new Date(data.released);
         const finished = data.released && new Date(data.finished);
+        title = sanitizeHtml(title, {allowedAttributes: false, allowedTags: false});
+        description = sanitizeHtml(description, {allowedAttributes: false, allowedTags: false});
 
         if (!img.startsWith("https")) {
             return {

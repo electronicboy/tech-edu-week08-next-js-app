@@ -1,6 +1,6 @@
 import {db} from "@/utils/db";
 import MovieCard from "@/components/movies/MovieCard";
-import FormElement from "@/components/forms/makeup/FormElement";
+import ClientFormElement from "@/components/forms/makeup/ClientFormElement";
 
 export default async function Home({params, searchParams}) {
 
@@ -11,8 +11,8 @@ export default async function Home({params, searchParams}) {
       {queryRes.rows.map((row) => {
         return <MovieCard key={row.id} {...row} />
       })}
-      <FormElement >
-      </FormElement>
+      <ClientFormElement >
+      </ClientFormElement>
     </div>
   );
 }

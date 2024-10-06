@@ -1,8 +1,13 @@
 'use client'
-export default function FormElement({children, submitAction}) {
+export default function ClientFormElement({children, submitAction}) {
     function handleSubmit(e) {
+        console.log(e)
         e.preventDefault();
-        submitAction(e)
+        try {
+            submitAction(e)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (<>
