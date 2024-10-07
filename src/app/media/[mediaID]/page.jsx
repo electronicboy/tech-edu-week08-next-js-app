@@ -27,8 +27,7 @@ export default async function MediaPage({params}) {
         try {
             await db().query("INSERT INTO moviereview_reviews (movie, name, comment, rating) VALUES ($1, $2, $3, $4)",
                 [mediaID, name, comment, parsedRating])
-        }
-        catch (error) {
+        } catch (error) {
             console.error(error)
         }
         revalidatePath(`/media/${mediaID}`)
@@ -43,7 +42,7 @@ export default async function MediaPage({params}) {
                 <div className={"w-full text-center pt-4 pb-4 flex justify-center"}>
                     <h2 className={"text-center text-4xl  inline"}>{media.title}</h2>
                     <div className={"inline"}>
-                        <DeletePostButton mediaID={mediaID} />
+                        <DeletePostButton mediaID={mediaID}/>
                         <Link href={`/media/${mediaID}/edit`}><FaEdit className={"inline"}/></Link>
                     </div>
                 </div>
@@ -53,7 +52,7 @@ export default async function MediaPage({params}) {
                     </div>
                     <div>
                         <div className={"whitespace-pre-wrap"}>
-                        {media.description}
+                            {media.description}
                         </div>
                         <div>
                             <span>{media.released ? formatDate(media.released) : "Not released"}</span>
@@ -80,14 +79,12 @@ export async function generateMetadata({params}) {
     const {mediaID} = params
     const mediaFetch = (await db().query("SELECT * FROM moviereview_media WHERE id = $1", [Number(mediaID)])).rows[0];
 
-return {
-    title: mediaFetch.title,
-    description: mediaFetch.description.slice(0,100),
-    openGraph: {
+    return {
         title: mediaFetch.title,
-        description: mediaFetch.description.slice(0,100),
+        description: mediaFetch.description.slice(0, 100),
+        openGraph: {
+            title: mediaFetch.title,
+            description: mediaFetch.description.slice(0, 100),
+        }
     }
-}
-
-
 }

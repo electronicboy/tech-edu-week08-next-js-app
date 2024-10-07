@@ -38,8 +38,10 @@ export default async function CreatePage() {
                 [title, type, released, finished, description, img])
             const id = query.rows[0].id;
 
-            for (const genreID of genres) {
-                await client.query(/* language=PostgreSQL */ "INSERT INTO moviereview_media_genre (media, genre) VALUES ($1, $2)", [id, genreID])
+            if (genres !== undefined) {
+                for (const genreID of genres) {
+                    await client.query(/* language=PostgreSQL */ "INSERT INTO moviereview_media_genre (media, genre) VALUES ($1, $2)", [id, genreID])
+                }
             }
 
             await client.query("COMMIT TRANSACTION");
