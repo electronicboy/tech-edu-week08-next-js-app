@@ -46,20 +46,24 @@ export default async function MediaPage({params}) {
                         <Link href={`/media/${mediaID}/edit`}><FaEdit className={"inline"}/></Link>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <Image width={200} height={200} src={media ? media.img : ""} alt={media.title}/>
-                    </div>
-                    <div>
-                        <div className={"whitespace-pre-wrap"}>
-                            {media.description}
+                <div className={"bg-gray-200 dark:bg-slate-700 p-2"}>
+                    <div className={"flex flex-col md:flex-row"}>
+                        <div className={"self-center"}>
+                            <Image width={200} height={200} src={media ? media.img : ""} alt={media.title}/>
                         </div>
                         <div>
-                            <span>{media.released ? formatDate(media.released) : "Not released"}</span>
-                            <span>{media.finished && (" - " + formatDate(media.finished)) || (media.released ? "" : "")}</span>
+                            <div className={"whitespace-pre-wrap md:pl-2"}>
+                                {media.description}
+                            </div>
                         </div>
                     </div>
+                    <div className={"text-gray-500 dark:text-gray-300"}>
+                        <span>{media.released ? formatDate(media.released) : "Not released"}</span>
+                        <span>{media.finished && (" - " + formatDate(media.finished)) || (media.released ? "" : "")}</span>
+                    </div>
+
                 </div>
+
                 <Comments mediaID={mediaID} submitComment={submitComment}/>
             </div>
         )
