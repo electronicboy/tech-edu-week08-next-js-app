@@ -7,8 +7,9 @@ import {FaEdit} from "react-icons/fa";
 import Link from "next/link";
 import Comments from "@/components/Comments";
 import {revalidatePath} from "next/cache";
-import {redirect} from "next/navigation";
+import {notFound, redirect} from "next/navigation";
 import DeletePostButton from "@/components/DeletePostButton";
+import {isNotFoundError} from "@/utils/object";
 
 export default async function MediaPage({params}) {
     const {mediaID} = params
@@ -37,6 +38,9 @@ export default async function MediaPage({params}) {
     try {
         const media = (await db().query("SELECT * FROM moviereview_media WHERE id = $1", [Number(mediaID)])).rows[0];
 
+        if (!media) {
+            notFound()
+        }
         return (
             <div>
                 <div className={"w-full text-center pt-4 pb-4 flex justify-center"}>
@@ -69,6 +73,9 @@ export default async function MediaPage({params}) {
         )
 
     } catch (e) {
+        if (isNotFoundError(e)) {
+            throw e;
+        }
         console.error(e);
     }
 
@@ -82,6 +89,10 @@ export default async function MediaPage({params}) {
 export async function generateMetadata({params}) {
     const {mediaID} = params
     const mediaFetch = (await db().query("SELECT * FROM moviereview_media WHERE id = $1", [Number(mediaID)])).rows[0];
+
+    if (!mediaFetch) return {
+        title: "Media not found"
+    }
 
     return {
         title: mediaFetch.title,
