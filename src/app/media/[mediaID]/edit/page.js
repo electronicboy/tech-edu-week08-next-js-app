@@ -1,8 +1,8 @@
 import {db} from "@/utils/db";
-import NotFound from "next/dist/client/components/not-found-error";
 import React from "react";
 import MediaEditorForm from "@/components/forms/MediaEditorForm";
 import {revalidatePath} from "next/cache";
+import {notFound} from "next/navigation";
 
 
 
@@ -62,11 +62,6 @@ export default async function EditPage({params}) {
         console.error(e);
     }
 
-    return (
-        <>
-            <NotFound/>
-        </>
-    )
-
+    notFound();
 }
 
